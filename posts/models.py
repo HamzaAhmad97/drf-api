@@ -1,8 +1,5 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields import CharField
-
-from blog.settings import AUTH_PASSWORD_VALIDATORS
 from django.contrib.auth import get_user_model
 
 class Post(models.Model):
