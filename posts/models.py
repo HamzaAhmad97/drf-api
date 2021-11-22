@@ -1,3 +1,30 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
+from django.contrib.auth import get_user_model
+from django.urls import reverse
 
-# Create your models here.
+class Post(models.Model):
+    hashtags_list = [
+        ('art','art'),
+        ('sports','sports'),
+        ('science','science'),
+        ('general','general'),
+        ('community','community'),
+        ('life','life')
+    ]
+    title = models.CharField(max_length=64)
+    content = models.TextField()
+    author = models.ForeignKey(get_user_model(), on_delete=CASCADE)
+    time_added = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now=True)
+    hashtags = models.CharField(max_length=9, choices=hashtags_list, default='life')
+    notes = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):  
+        return reverse('post_details', args=[str(self.pk)])
+
+    
+
